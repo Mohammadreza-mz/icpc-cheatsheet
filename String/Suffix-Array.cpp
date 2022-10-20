@@ -10,7 +10,21 @@ bool cmp(int x, int y){
 
 //TODO: refactor
 //TODO: add nlog2 implementation
-//TODO: add LCP
+int lcp(int i, int j){
+	//lcp i,i+1,...n-1 and j,j+1,...,n-1
+	if(j<i)
+		swap(i,j);
+	int ans=0;
+	for(int k=ML-1;k>=0;k--){
+		//for cyclic check ans<=n
+		if((1<<k)+j < n && rnk[k][i]==rnk[k][j]){
+			ans+= (1<<k);
+			i+= (1<<k);
+			j+= (1<<k);
+		}
+	}
+	return ans;
+}
 //TODO: add non-cyclic extension
 
 vector<int> radix[2][M];
