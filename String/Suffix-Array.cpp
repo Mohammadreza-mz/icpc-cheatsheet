@@ -25,15 +25,17 @@ int lcp(int i, int j){
 	}
 	return ans;
 }
-//TODO: add non-cyclic extension
 
 vector<int> radix[2][M];
 string minimum_cyclic_shift(string s){
+	//to make non cyclic: s+="$" $ is smaller than most of characters
 	n= s.size();
 	for(int i=0;i<n;i++)
+		//-'$'
 		radix[0][s[i]-'a'].pb(i);
 		
 	int cnt=0,tmp=0;
+	//i<127
 	for(int i=0;i<26;i++){
 		for(int u:radix[0][i])
 			rnk[0][u] = cnt, ord[tmp++]= u;
