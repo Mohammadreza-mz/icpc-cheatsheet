@@ -16,11 +16,13 @@ int lcp(int i, int j){
 		swap(i,j);
 	int ans=0;
 	for(int k=ML-1;k>=0;k--){
-		//for cyclic check ans<=n
-		if((1<<k)+j < n && rnk[k][i]==rnk[k][j]){
+		//for cyclic check ans<=n and use mod for i and j
+		if((1<<k)+j <= n && rnk[k][i]==rnk[k][j]){
 			ans+= (1<<k);
 			i+= (1<<k);
 			j+= (1<<k);
+			if(j==n)
+				return ans;
 		}
 	}
 	return ans;
