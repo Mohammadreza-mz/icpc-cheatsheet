@@ -1,0 +1,38 @@
+In the following, let G be a finite group that acts on a set X. For each g in G let Xg denote the set of elements in X that are fixed by g (also said to be left invariant by g), i.e. X^g = \{ x \in X | g.x = x \}.
+
+Burnside's lemma asserts the following formula for the number of orbits, denoted {\displaystyle |X/G| }:
+
+
+{\displaystyle |X/G|={\frac {1}{|G|}}\sum _{g\in G}|X^{g}|.} |X/G|={\frac  {1}{|G|}}\sum _{{g\in G}}|X^{g}|.
+
+
+Thus the number of orbits (a natural number or +infinity) is equal to the average number of points fixed by an element of G (which is also a natural number or infinity). If G is infinite, the division by G may not be well-defined; in this case the following statement in cardinal arithmetic holds:
+
+
+{\displaystyle |G||X/G|=\sum _{g\in G}|X^{g}|.}
+
+
+Example application:
+
+The number of rotationally distinct colourings of the faces of a cube using three colours can be determined from this formula as follows.
+
+Let X be the set of 3*3*3*3*3*3 possible face colour combinations that can be applied to a cube in one particular orientation, and let the rotation group G of the cube act on X in the natural manner. Then two elements of X belong to the same orbit precisely when one is simply a rotation of the other. The number of rotationally distinct colourings is thus the same as the number of orbits and can be found by counting the sizes of the fixed sets for the 24 elements of G.
+
+
+- one identity element which leaves all 3*3*3*3*3*3 elements of X unchanged
+
+- six 90-degree face rotations, each of which leaves 3*3*3 of the elements of X unchanged
+
+- three 180-degree face rotations, each of which leaves 3*3*3*3 of the elements of X unchanged
+
+- eight 120-degree vertex rotations, each of which leaves 3*3 of the elements of X unchanged
+
+- six 180-degree edge rotations, each of which leaves 3*3*3 of the elements of X unchanged
+
+The average fix size is thus
+
+{\displaystyle {\frac {1}{24}}\left(3^{6}+6\cdot 3^{3}+3\cdot 3^{4}+8\cdot 3^{2}+6\cdot 3^{3}\right)=57.}
+
+Hence there are 57 rotationally distinct colourings of the faces of a cube in three colours. In general, the number of rotationally distinct colorings of the faces of a cube in n colors is given by
+
+{\displaystyle {\frac {1}{24}}\left(n^{6}+3n^{4}+12n^{3}+8n^{2}\right).}
