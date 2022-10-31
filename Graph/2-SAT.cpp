@@ -1,43 +1,61 @@
-//From "You Know Izad?" team cheat sheet
-//fill the v array  
-//e.g. to push (p v !q) use the following code:  
-//  v[VAR(p)].push_back( NOT( VAR(q) ) )  
-//  v[NOT( VAR(q) )].push_back( VAR(p) )  
-//the result will be in color array  
-#define VAR(X) (X << 1)  
-#define NOT(X) (X ^ 1)  
-#define CVAR(X,Y) (VAR(X) | (Y))z  
-#define COL(X) (X & 1)  
-#define NVAR 400  
-int n;  
-vector<int> v[2 * NVAR];  
-int color[2 * NVAR];  
-int bc[2 * NVAR];  
-bool dfs( int a, int col ) {  
-    color[a] = col;  
-    int num = CVAR( a, col );  
-    for( int i = 0; i < v[num].size(); i++ ) {  
-        int adj = v[num][i] >> 1;  
-        int ncol = NOT( COL( v[num][i] ) );  
-        if( ( color[adj] == -1 && !dfs( adj, ncol ) ) ||   
-            ( color[adj] != -1 && color[adj] != ncol ) ) {  
-            color[a] = -1;  
-            return false;  
-        }  
-    }  
-    return true;  
-}  
-bool twosat() {  
-    memset( color, -1, sizeof color );  
-    for( int i = 0; i < n; i++ ){  
-        if( color[i] == -1 ){  
-            memcpy(bc, color, sizeof color);  
-            if( !dfs( i, 0 )){  
-                memcpy(color, bc, sizeof color);  
-                if(!dfs( i, 1 ))  
-                    return false;  
-            }  
-        }  
-    }  
-    return true;  
-}  
+const int N = 1e5 + 100;
+int n, m, comp[N << 1];
+bool ans[N], mark[N << 1];
+vector<int> topo, in[N << 1], out[N << 1];
+void dfs(int v, vector<int> *nei, vector<int> *vec) {
+	mark[v] = true;
+	for (int u: nei[v])
+		if (mark[u] == false) {
+			comp[u] = comp[v];
+			dfs(u, nei, vec);
+		}
+	vec->push_back(v);
+}
+bool check() {
+	for (int v = 0; v < (n << 1); v++)
+		if (mark[v] == false)
+			dfs(v, out, &topo);
+	memset(mark, false, sizeof mark);
+	int COMP = 1;
+	while (topo.size()) {
+		int u = topo.back();
+		topo.pop_back();
+		if (mark[u])
+			continue;
+		comp[u] = COMP++;
+		dfs(u, in, &out[(N << 1) - 1]);
+	}
+	for (int i = 0; i < n; i++)
+		if (comp[i << 1] == comp[i << 1 | 1])
+			return false;
+		else
+			ans[i] = (comp[i << 1 | 1] > comp[i << 1]);
+	return true;
+}
+void add_edge(int u, int v) {
+	out[u].push_back(v);
+	in[v].push_back(u);
+}
+void add_condition(int u, int v) {
+	add_edge(u, v);
+	add_edge(v ^ 1, u ^ 1);
+}
+void input() {
+	cin >> n >> m;
+	while (m--) {
+		// 0 -> 0
+		// 0 -> 1
+		// 1 -> 0
+		// 1 -> 1
+		int u, v, x;
+		cin >> u >> v >> x;
+		u--, v--;
+		add_condition((u << 1) | (x >> 1), (v << 1) | (x & 1));
+	}
+}
+int main() {
+	input();
+	cout << (check()? "YES": "NO") << '\n';
+	for (int i = 0; i < n; i++)
+		cout << "b[" << i << "] = " << ans[i] << '\n';
+}
