@@ -2,9 +2,7 @@
 #include <ext/rope> //header with rope
 using namespace std;
 using namespace __gnu_cxx; //namespace with rope and some additional stuff
-int main()
-{
-
+int main(){
     rope <int> v; //use as usual STL container
     int n, m;
     cin >> n >> m;

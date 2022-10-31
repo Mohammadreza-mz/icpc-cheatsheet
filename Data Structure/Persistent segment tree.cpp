@@ -1,44 +1,45 @@
-// ask: find  a[l] +  a[l+1]  + a[l+2] +...+ a[r]  After the i th update query online
-// update:  a[p]+= v
-
-// ir = 0 which is its index in the initial segment tree Also you should have a NEXT_FREE_INDEX = 1 which is always the next free index for a node.
-void build(int id = ir,int l = 0,int r = n){
-	if(r - l < 2){
-		s[id] = a[l];
-		return ;
-	}
-	int mid = (l+r)/2;
-	L[id] = NEXT_FREE_INDEX ++;
-	R[id] = NEXT_FREE_INDEX ++;
-	build(L[id], l, mid);
-	build(R[id], mid, r);
-	s[id] = s[L[id]] + s[R[id]];
+int n, cnt=0;
+ll sum[M], le[M], ri[M], root[M];
+void build(int id, int b, int e){
+	sum[id]=0;
+	if(e-b==1)
+		return;
+	int m=(b+e)/2;
+	le[id]= ++cnt;
+	build(le[id], b,m);
+	ri[id]= ++cnt;
+	build(le[id], m,e);
 }
 
-// Update function : (its return value, is the index of the interval in the new version of segment tree and id is the index of old one)
-int upd(int p, int v,int id,int l = 0,int r = n){
-	int ID =  NEXT_FREE_INDEX ++; // index of the node in new version of segment tree
-	if(r - l < 2){
-		s[ID] = (a[p] += v);
-		return ID;
+int g(int id, int b, int e, int l, int r){
+	if(l<=b && e<=r) return sum[id];
+	if(e<=l || r<=b) return 0;
+	int m= (b+e)/2;
+	return g(le[id], b,m, l,r) + g(ri[id], m,e ,l,r);
+}
+
+int upd(int id, int b, int e, int x, int y){
+	if(e-b==1){
+		sum[++cnt]= y;
+		return cnt;
 	}
-	int mid = (l+r)/2;
-	L[ID] = L[id], R[ID] = R[id]; // in case of not updating the interval of left child or right child
-	if(p < mid)
-		L[ID] = upd(p, v, L[ID], l, mid);
+	int m=(b+e)/2, tmp= ++cnt;
+	le[tmp]= le[id],ri[tmp]= ri[id];
+	if(x<m)
+		le[tmp]= upd(le[id], b,m ,x,y);
 	else
-		R[ID] = upd(p, v, R[ID], mid, r);
-	return ID;
+		ri[tmp]= upd(ri[id], m,e ,x,y);
+		
+	sum[tmp]= sum[le[tmp]]	+ sum[ri[tmp]];
+	return tmp;
 }
 
-// (For the first query (with index 0) we should run root[0] = upd(p,  v,  ir)
-// and for the rest of them, for j - th query se should run root[j] = upd(p,  v,  root[j - 1]) )
-int sum(int x,int y,int id,int l = 0,int r = n){
-	if(x >= r or l >= y)	return 0;
-	if(x <= l && r <= y)	return s[id];
-	int mid = (l+r)/2;
-	return sum(x, y, L[id], l, mid) +
-	       sum(x, y, R[id], mid, r);
+int main(){
+	root[0]= ++cnt;
+	build(root[0], 0, n);
+	for(int i=0;i<q;i++){
+		root[i] = root[i - 1];
+		//do ith upd query:
+		root[i] = upd(root[i], 0 , n, pos, val);
+	}
 }
-
-// (So, we should print the value of sum(x, y, root[i]) )

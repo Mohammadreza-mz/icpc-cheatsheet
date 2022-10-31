@@ -8,8 +8,6 @@ bool cmp(int x, int y){
 	return rnk[lev][(x+(1<<lev))%n] < rnk[lev][(y+(1<<lev))%n];
 }
 
-//TODO: refactor
-//TODO: add nlog2 implementation
 int lcp(int i, int j){
 	//lcp i,i+1,...n-1 and j,j+1,...,n-1
 	if(j<i)

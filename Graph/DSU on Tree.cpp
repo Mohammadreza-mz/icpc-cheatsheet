@@ -1,8 +1,6 @@
-// How many vertices in subtree of vertice v has some property in O(n lg n) time (for all of the queries).
+// How many vertices in subtree of vertices v has some property in O(n lg n) time (for all of the queries).
 // Approach 1
-
 //sz[i] = size of subtree of node i
-
 int cnt[maxn];
 bool big[maxn];
 void add(int v, int p, int x){

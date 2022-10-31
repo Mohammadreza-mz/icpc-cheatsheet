@@ -1,10 +1,6 @@
-#include <bits/stdc++.h>
-using namespace std;
 const long long N = 2e5 + 2, K = 50 + 2, inf = 1e18;
-
 double dp[N][K], sum[N], prefix[N], rev[N], x;
 int n, k;
-
 inline double cost(int l, int r, int k) {
 	return dp[l - 1][k - 1] + (prefix[r] - prefix[l - 1]) - ((rev[r] - rev[l - 1]) * sum[l - 1]);
 }
@@ -18,7 +14,6 @@ void solve(int l, int r, int k, int optl, int optr) {
 	solve(l, mid - 1, k, optl, idx);
     solve(mid + 1, r, k, idx, optr);
 }
-
 int main() {
 	cin >> n >> k;
 	for (int i = 0; i < n; i++) {

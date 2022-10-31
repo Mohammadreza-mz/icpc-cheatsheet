@@ -22,6 +22,6 @@ void dfs_hld(int v = 0) {
 Then you will have such array that subtree of V correspond to segment [in(v), out(v)) 
 and the path from V to the last vertex in ascending heavy path from V(which is nxt(v)) 
 will be [in(nxt(v)), in(v)] subsegment 
-which gives you the opportunity to process queries on pathes 
+which gives you the opportunity to process queries on paths 
 and subtrees simultaneously in the same segment tree. 
 */
