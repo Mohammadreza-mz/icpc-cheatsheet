@@ -56,13 +56,13 @@ void multiply (int u , int v){
 	a.resize(n);
 	b.resize(n);
     fft(a, false), fft(b, false);  
-    fore(i, 0, n - 1){
+    for(int i=0; i<n; i++){
     	a[i] *= b[i];  
     }
     fft (a, true);  
     res.resize (n);  
 
-    fore(i, 0, n - 1) {
+    for(i=0; i<n; i++) {
     	res[i] = round(a[i].real());
     } 
 }

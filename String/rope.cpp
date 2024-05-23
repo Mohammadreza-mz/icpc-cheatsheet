@@ -11,7 +11,7 @@ int main(){
     string p ;
     int idx;
     cin>>p>>idx;
-    fore(i,1,p.size()){
+    for(i=1;i<=p.size();i++){
         s.insert(i + idx -1 , p[i-1]);
     }
     int l, r;

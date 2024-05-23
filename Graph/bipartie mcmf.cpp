@@ -22,7 +22,7 @@ int mcmf(int s, int t , int maxFlow)
 			ii p = que.top(); que.pop();
 			int v = p.second;
 			if (dst[v] < p.first) continue;
-			fore(i , 0 , g[v].size() - 1) {
+			for(int i=0; i<g[v].size();i++) {
 				edge &e = g[v][i];
 				int nd = dst[v] + e.cost + h[v] - h[e.to];
 				if (e.cap > 0 && dst[e.to] > nd){
@@ -35,7 +35,7 @@ int mcmf(int s, int t , int maxFlow)
 		}
  
 		if (dst[t] == inf) return c;
-		fore(i, 0 , n - 1) h[i] += dst[i];
+		for(int i=0; i<n; i++) h[i] += dst[i];
  
 		int d = inf;
 		for(int v = t; v != s; v = prevv[v])
