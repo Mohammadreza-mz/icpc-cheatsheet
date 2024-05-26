@@ -28,7 +28,7 @@ bool IsPalindrome(int l, int sz){
 void calc_hash(string &str){
 	for(int j=0;j<T;j++){
 		hs[j][0] = 0;
-		pw[i][0]= 1;
+		pw[j][0]= 1;
 		for(int i=1;i<=str.size();i++){
 			pw[j][i]= pw[j][i-1]*bas[j]%mod[j];
 			hs[j][i]= (hs[j][i-1]*bas[j]+(str[i-1]-'a'+1)) %mod[j];
