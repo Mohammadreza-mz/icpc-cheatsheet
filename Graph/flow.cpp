@@ -1,8 +1,9 @@
-// badtar az O(FE) nemishe
+// In any case it won't work worse than O(FE)
 // O(EV^2) on normal graph
-// O(E sqrt(v)) on unit graph: each edge has 1 capacity
-// and either incoming or outgoing edge is unique.
-// min O(V Sqrt(E)), O(V E^2/3) on graph with only 1 capacity edges
+// O(E sqrt(v)) on unit graph: for each vertex
+// either incoming or outgoing edge is unique
+// and that edge has 1 capacity
+// min O(V Sqrt(E)), O(E V^2/3) on graph with only 1 capacity edges
 struct FlowEdge {
     int v, u;
     long long cap, flow = 0;
