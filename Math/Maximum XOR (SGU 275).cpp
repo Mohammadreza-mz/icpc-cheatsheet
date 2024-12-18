@@ -1,21 +1,34 @@
-int n;
-long long x, ans;
-vector<long long> st;
-int main() {
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		cin >> x;
-		st.push_back(x);
-	}
-	for (int k = 0; k < n; k++)
-		for (int i = 0; i < st.size(); i++)
-			for (int j = i + 1; j < st.size(); j++)
-				if (__builtin_clzll(st[j]) == __builtin_clzll(st[i]))
-					st[j] ^= st[i];
-	sort(st.begin(), st.end());
-	reverse(st.begin(), st.end());
-	for (auto e: st)
-		ans = max(ans, ans ^ e);
-	cout << ans << endl;
-	return 0;
+const int B= 62;
+ll a[B+1];
+void add(ll x){
+    for(int i=B;i>=0;i--){
+        ll v= (1ll << i);
+        if(v & x){
+            if(a[i])
+                x^= a[i];
+            else{
+                a[i] = x;
+                break;
+            }
+        }
+    }
+}
+ll find_ans(){
+    ll ans = 0;
+    for(int i=B;i>=0;i--){
+        ll v= (1ll << i);
+        if(a[i] && (v & ans)==0)
+            ans ^= a[i];
+    }
+    return ans;
+}
+int main(){
+    int n;
+    cin>>n;
+    while(n--){
+        ll x;
+        cin>>x;
+        add(x);
+    }
+    cout<<find_ans();
 }
